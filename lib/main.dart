@@ -7,121 +7,262 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter Demo Contenedores',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: Home(), //Se crea una clase nueva
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+//Borrar clase MyHomePage y crear Home con st - StatelessWidget
+class Home extends StatelessWidget {
+  const Home({super.key});
 
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Image.asset(
-            'assets/images/sala.png',
-            width: 40.0,
-            height: 40.0,
-          ),
-          actions: const <Widget>[
-            Icon(Icons.search),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 25.0),
-              child: Icon(Icons.dehaze),
-            ),
-          ],
+      appBar: AppBar(
+        title: Image.asset(
+          'assets/images/sala.png',
+          height: 40.0,
+          width: 40.0,
         ),
-        body: Column(
-          children: <Widget>[
-            Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Text('Continua Estudiado',
-                    style: TextStyle(color: Colors.grey[400], fontSize: 20))),
-            SizedBox(
-              height: 150,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Container(
-                        width: 200,
-                        height: 150,
-                        color: Colors.lightBlue,
-                      )),
-                  Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Container(
-                        width: 200,
-                        height: 150,
-                        color: Colors.green[100],
-                      )),
-                  Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Container(
-                        width: 200,
-                        height: 150,
-                        color: Colors.indigo[100],
-                      )),
-                  Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Container(
-                        width: 200,
-                        height: 150,
-                        color: Colors.lime[100],
-                      )),
-                ],
+        actions: <Widget>[
+          Icon(Icons.search),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 25.0),
+            child: Icon(Icons.dehaze),
+          )
+        ],
+      ),
+      body: Column(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(12.0),
+            child: Text(
+              'Continua Estudiando',
+              style: TextStyle(
+                color: Colors.grey,
+                fontSize: 20.0,
               ),
             ),
-            const DefaultTabController(
-                length: 3,
-                // ignore: unnecessary_const
-                child: TabBar(
-                  unselectedLabelColor: Colors.grey,
-                  indicatorColor: Colors.transparent,
-                  indicator: BoxDecoration(color: Colors.blueAccent),
-                  tabs: [
-                    Tab(
-                      icon: Icon(Icons.work),
-                      child: TabBarView(children: [
-                        Text('asdsad'),
-                        Icon(Icons.battery_unknown_outlined)
-                      ]),
-                    ),
-                    Tab(
-                      icon: Icon(Icons.work),
-                      child: TabBarView(children: [
-                        Text('asdsad'),
-                        Icon(Icons.battery_unknown_outlined)
-                      ]),
-                    ),
-                    Tab(
-                      icon: Icon(Icons.work),
-                      child: TabBarView(children: [
-                        Text('asdsad'),
-                        Icon(Icons.battery_unknown_outlined)
-                      ]),
-                    ),
-                  ],
-                )),
-          ],
-        ));
+          ),
+          Container(
+            height: 150,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Container(
+                    width: 200,
+                    height: 150,
+                    color: Colors.red[50],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Container(
+                    width: 200,
+                    height: 150,
+                    color: Colors.green[100],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Container(
+                    width: 200,
+                    height: 150,
+                    color: Colors.teal[100],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Container(
+                    width: 200,
+                    height: 150,
+                    color: Colors.yellow[100],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          ManejoTabs(),
+          //const TabBarDemo(),
+        ],
+      ),
+    );
+  }
+}
+
+class TabBarDemo extends StatelessWidget {
+  const TabBarDemo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          appBar: AppBar(
+            bottom: const TabBar(
+              tabs: [
+                Tab(icon: Icon(Icons.book)),
+                Tab(icon: Icon(Icons.workspace_premium)),
+                Tab(icon: Icon(Icons.folder_special)),
+              ],
+            ),
+            title: const Text('Tabs Demo'),
+          ),
+          body: const TabBarView(
+            children: [
+              Icon(Icons.book),
+              Icon(Icons.workspace_premium),
+              Icon(Icons.folder_special),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ManejoTabs extends StatefulWidget {
+  const ManejoTabs({super.key});
+
+  @override
+  State<ManejoTabs> createState() => _ManejoTabsState();
+}
+
+class _ManejoTabsState extends State<ManejoTabs> with TickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    _tabController = TabController(length: 3, vsync: this);
+    _tabController.animateTo(2);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 200,
+      //color: Colors.blue[100],
+      child: Column(
+        children: <Widget>[
+          DefaultTabController(
+            length: 3,
+            child: TabBar(
+              controller: _tabController,
+              unselectedLabelColor: Colors.grey,
+              indicatorColor: Colors.red,
+              indicator: BoxDecoration(color: Colors.green),
+              tabs: [
+                Tab(text: 'Cursos'),
+                Tab(text: 'Workshops'),
+                Tab(text: 'Especialidades'),
+              ],
+            ),
+          ),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                ContenUno(),
+                ContenDos(),
+                ContenTres(),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ContenUno extends StatelessWidget {
+  const ContenUno({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(children: <Widget>[
+        Text(
+          'Cursos',
+          style: TextStyle(
+            color: Colors.blueAccent,
+            fontSize: 30, //¿Cómo cambiar color?
+          ),
+        ),
+        Text(
+          'La cantida de cursos que pueden encontrar en esta plataforma es muy variada, ademas de que hay muchas opciones para cada tema por lo que no dudes en buscar el que mas se ajuste a tus gustos',
+          style: TextStyle(
+            color: Colors.blueGrey,
+            fontSize: 20, //¿Cómo cambiar color?
+          ),
+        ),
+        Icon(Icons.book),
+      ]),
+    );
+  }
+}
+
+class ContenDos extends StatelessWidget {
+  const ContenDos({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(children: <Widget>[
+        Text(
+          'Workshops',
+          style: TextStyle(
+            color: Colors.blueAccent,
+            fontSize: 30, //¿Cómo cambiar color?
+          ),
+        ),
+        Text(
+          'En este apartado podras encontrar una gran variedad de talleres con los que puedes aprender y reforzar distintas habilidades',
+          style: TextStyle(
+            color: Colors.blueGrey,
+            fontSize: 20, //¿Cómo cambiar color?
+          ),
+        ),
+        Icon(Icons.workspace_premium),
+      ]),
+    );
+  }
+}
+
+class ContenTres extends StatelessWidget {
+  const ContenTres({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(children: <Widget>[
+        Text(
+          'Especilidades',
+          style: TextStyle(
+            color: Colors.blueAccent,
+            fontSize: 30, //¿Cómo cambiar color?
+          ),
+        ),
+        Text(
+          'En este apartado pueder revisar las distintas especialidades con las que cuenta la aplicación',
+          style: TextStyle(
+            color: Colors.blueGrey,
+            fontSize: 20, //¿Cómo cambiar color?
+          ),
+        ),
+        Icon(Icons.folder_special),
+      ]),
+    );
   }
 }
